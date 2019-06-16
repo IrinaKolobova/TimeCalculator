@@ -6,73 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editText_startingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="42dp"
-        android:ems="10"
-        android:inputType="time"
+
+    <TimePicker
+        android:id="@+id/timePicker_startingTime"
+        android:layout_width="240dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="20dp"
+        android:timePickerMode="spinner"
         app:layout_constraintBottom_toTopOf="@+id/button_add"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintVertical_bias="0.363" />
 
     <Button
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="248dp"
-        android:text="@string/button_add_armyTime"
+        android:layout_height="0dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="20dp"
         android:onClick="add"
+        android:text="@string/button_add_armyTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime" />
 
     <Button
         android:id="@+id/button_subtract"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="44dp"
-        android:text="@string/button_subtract_amPm"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="20dp"
         android:onClick="subtract"
-        app:layout_constraintBottom_toTopOf="@+id/editText_amountToAdd"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="@string/button_subtract_amPm"
+        app:layout_constraintBottom_toTopOf="@+id/timePicker_amountToAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime" />
 
-    <EditText
-        android:id="@+id/editText_amountToAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="@+id/editText_startingTime"
-        app:layout_constraintStart_toStartOf="@+id/editText_startingTime"
+    <TimePicker
+        android:id="@+id/timePicker_amountToAdd"
+        android:layout_width="240dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="20dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="@+id/timePicker_startingTime"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/timePicker_startingTime"
         app:layout_constraintTop_toBottomOf="@+id/button_add" />
+
 
     <Button
         android:id="@+id/button_calculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="53dp"
-        android:text="@string/button_calculate"
+        android:layout_marginTop="20dp"
         android:onClick="calculate"
+        android:text="@string/button_calculate"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_amountToAdd" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker_amountToAdd" />
 
     <TextView
         android:id="@+id/textView_result"
         android:layout_width="189dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="84dp"
-        android:text="TextView"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

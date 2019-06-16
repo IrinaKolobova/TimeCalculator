@@ -1,49 +1,56 @@
 package com.example.timecalculator;
 
-import android.support.design.widget.TabItem;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText editText_startingTime, editText_amountToAdd;
-    Button button_add, button_subtract, button_calculate;
-    TextView textView_result;
-    String startingTime, amountToAdd, resultOfHours, resultOfMinutes, date;
-    long diff;
-    boolean add, substract;
-    DateFormat formatter = new SimpleDateFormat("HH:mm");
+    private Button button_add, button_subtract, button_calculate;
+    private TextView textView_result;
+    private TimePicker timePicker_startingTime, timePicker_amountToAdd;
+    private String startingTime, amountToAdd, resultOfHours, resultOfMinutes, date;
+    private long diff;
+    private int startingHour, startingMin, addHour, addMin;
+    private boolean add, subtract;
 
 
-    //https://www.youtube.com/watch?v=Vxiy_h5hNII
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText_startingTime = findViewById(R.id.editText_startingTime);
-        editText_amountToAdd = findViewById(R.id.editText_amountToAdd);
         button_add = findViewById(R.id.button_add);
         button_subtract = findViewById(R.id.button_subtract);
         button_calculate = findViewById(R.id.button_calculate);
         textView_result = findViewById(R.id.textView_result);
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        timePicker_startingTime = findViewById(R.id.timePicker_startingTime);
+        timePicker_startingTime.setIs24HourView(true);
+        timePicker_startingTime.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                startingHour = hourOfDay;
+                startingMin = minute;
+            }
+        });
+
+        timePicker_amountToAdd = findViewById(R.id.timePicker_amountToAdd);
+        timePicker_amountToAdd.setIs24HourView(true);
+        timePicker_amountToAdd.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                addHour = hourOfDay;
+                addMin = minute;
+            }
+        });
+
         add = false;
-        substract = false;
+        subtract = false;
 
     }
 
@@ -52,57 +59,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void subtract(View v){
-        substract = true;
+        subtract = true;
     }
 
     public void calculate (View v){
-        startingTime = String.valueOf(editText_startingTime.getText());
-        amountToAdd = String.valueOf(editText_amountToAdd.getText());
         date = "current day";
-
-        try {
-            Date date_startingTime = formatter.parse(startingTime);
-            Date date_amountToAdd = formatter.parse(amountToAdd);
-            if(add){
-                diff = date_startingTime.getTime() + date_amountToAdd.getTime();
-            } else if(substract){
-                diff = date_startingTime.getTime() - date_amountToAdd.getTime();
-            }
-
-            if(diff>=86400000){
-                date = "next day";
-            }
-
-            if(diff<0)
-            {
-                Date dateMax = formatter.parse("24:00");
-                Date dateMin = formatter.parse("00:00");
-                long dateMaxLong = dateMax.getTime();
-                diff = dateMaxLong + diff;
-                date = "previous day";
-                Log.i("Test","dateMaxLong: " + dateMaxLong + ", diff: " + diff);
-            }
-
-            long diffHours = diff / (60 * 60 * 1000) % 24;
-            long diffMins = diff  / (60 * 1000) % 60;
-            Log.i("Test","Hours: "+diffHours+", Min: " + diffMins);
-            if(diffHours<10){
-                resultOfHours = "0" + String.valueOf(diffHours);
-            } else{
-                resultOfHours = String.valueOf(diffHours);
-            }
-            if(diffMins<10){
-                resultOfMinutes = "0" + String.valueOf(diffMins);
-            } else {
-                resultOfMinutes = String.valueOf(diffMins);
-            }
-            add = false;
-            substract = false;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        textView_result.setText(date +"\n" + resultOfHours + ":" + resultOfMinutes);
+        Toast.makeText(getApplicationContext(), "startingHour = " + startingHour + " startingMin = " + startingMin +
+                "\n" + "addHour = " + addHour + " addMin = " + addMin , Toast.LENGTH_SHORT).show();
 
     }
+
+
 }
