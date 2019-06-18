@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">TimeCalculator</string>
-    <string name="button_add_armyTime">+</string>
-    <string name="button_add_amPm">+</string>
-    <string name="button_subtract_armyTime">-</string>
-    <string name="button_subtract_amPm">-</string>
-    <string name="button_calculate_armyTime">Calculate</string>
+    <string name="button_add">+</string>
+    <string name="button_subtract">-</string>
     <string name="button_calculate">Calculate</string>
     <string name="tabAmPm">Am/Pm</string>
     <string name="tabArmyTime">Army time</string>
-    <string name="textView_result">%1$s \n %2$s : %3$s</string>
+    <string name="textView_result">%1$s\n%2$s:%3$s</string>
+    <string name="button_armyTime">Army Time</string>
+    <string name="button_amPm">Am/Pm</string>
 </resources>

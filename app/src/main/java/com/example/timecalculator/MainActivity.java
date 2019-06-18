@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
         subtract = true;
     }
 
+    public void armyTime(View v){}
+
+    public void amPm(View v){}
+
     public void calculate (View v){
         date = "Current day";
         errorMessage = "";
@@ -105,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes);
-        
+
         textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes));
 
         add = false;
@@ -113,7 +117,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
+    
 }
