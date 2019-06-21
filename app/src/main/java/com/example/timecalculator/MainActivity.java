@@ -71,73 +71,82 @@ public class MainActivity extends AppCompatActivity {
 
     public void add(View v){
         add = true;
+        subtract = false;
+        textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void subtract(View v){
         subtract = true;
+        add = false;
+        textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void armyTime(View v){
         constraint_layout.setBackground(getDrawable(R.drawable.armytime_background));
         timePicker_startingTime.setIs24HourView(true);
         ampmFormat = false;
+        textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void amPm(View v){
         constraint_layout.setBackground(getDrawable(R.drawable.ampm_background));
         timePicker_startingTime.setIs24HourView(false);
         ampmFormat = true;
+        textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void calculate (View v){
-
         date = "Current day";
         errorMessage = "";
         Log.i("Calculate incoming data: " ,"startingHour = " + startingHour + ", startingMin = " + startingMin +
                 "\n" + "addHour = " + addHour + ", addMin = " + addMin );
 
-        if(add){
-            diffOfHours = startingHour + addHour;
-            diffOfMinutes = startingMin + addMin;
-            if(diffOfMinutes >= 60){
-                diffOfMinutes = diffOfMinutes - 60;
-                diffOfHours += 1;
+        if(add || subtract){
+            if(add){
+                diffOfHours = startingHour + addHour;
+                diffOfMinutes = startingMin + addMin;
+                if(diffOfMinutes >= 60){
+                    diffOfMinutes = diffOfMinutes - 60;
+                    diffOfHours += 1;
+                }
+                if(diffOfHours >= 24){
+                    date = "Next day";
+                    diffOfHours = diffOfHours - 24;
+                }
+            } else {
+                diffOfHours = startingHour - addHour;
+                diffOfMinutes = startingMin - addMin;
+                if (diffOfMinutes < 0) {
+                    diffOfHours -= 1;
+                    diffOfMinutes = 60 + diffOfMinutes;
+                }
+                if (diffOfHours < 0) {
+                    diffOfHours = 24 + diffOfHours;
+                    date = "Previous day";
+                }
             }
-            if(diffOfHours >= 24){
-                date = "Next day";
-                diffOfHours = diffOfHours - 24;
+            resultOfHours = String.valueOf(diffOfHours);
+            resultOfMinutes = String.valueOf(diffOfMinutes);
+
+            if(diffOfHours < 10){
+                resultOfHours = "0" + resultOfHours;
             }
-        }else if(subtract){
-            diffOfHours = startingHour - addHour;
-            diffOfMinutes = startingMin - addMin;
-            if(diffOfMinutes < 0){
-                diffOfHours -= 1;
-                diffOfMinutes = 60 + diffOfMinutes;
+            if(diffOfMinutes < 10){
+                resultOfMinutes = "0" + resultOfMinutes;
             }
-            if(diffOfHours < 0){
-                diffOfHours = 24 + diffOfHours;
-                date = "Previous day";
+
+            Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes);
+
+            if(ampmFormat){
+                calculateAmPM(diffOfHours);
+            } else {
+                textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, ""));
             }
+
         } else {
             errorMessage = "Please choose add or subtract.";
-        }
-
-        resultOfHours = String.valueOf(diffOfHours);
-        resultOfMinutes = String.valueOf(diffOfMinutes);
-
-        if(diffOfHours < 10){
-            resultOfHours = "0" + resultOfHours;
-        }
-        if(diffOfMinutes < 10){
-            resultOfMinutes = "0" + resultOfMinutes;
-        }
-
-        Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes);
-
-        if(ampmFormat){
-            calculateAmPM(diffOfHours);
-        } else {
-            textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, ""));
+            Log.i("Calculate result data: ", "Error");
+            textView_result.setText(getString(R.string.textView_err, errorMessage));
         }
 
         add = false;
@@ -147,7 +156,8 @@ public class MainActivity extends AppCompatActivity {
     private void calculateAmPM(int diffOfHours) {
         int amPmHours = diffOfHours - 12;
         String amOrPM;
-        if(amPmHours >= 12){
+
+        if(amPmHours >= 0){
             resultOfHours = String.valueOf(amPmHours);
             amOrPM = "PM";
             textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, amOrPM));
@@ -157,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, amOrPM));
         }
 
+        Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes + " " + amOrPM);
 
     }
 
