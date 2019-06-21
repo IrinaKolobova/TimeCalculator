@@ -2,10 +2,42 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/armytime_background"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/button_amPm"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/transparent"
+        android:gravity="start|top"
+        android:onClick="amPm"
+        android:text="@string/button_amPm"
+        android:textStyle="bold"
+        android:textColor="@color/colorText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_armyTime"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_armyTime"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity=""
+        android:backgroundTint="@color/transparent"
+        android:gravity="top|end"
+        android:onClick="armyTime"
+        android:text="@string/button_armyTime"
+        android:textStyle="bold"
+        android:textColor="@color/colorText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="OnClick" />
 
     <TimePicker
         android:id="@+id/timePicker_startingTime"
@@ -29,7 +61,8 @@
         android:layout_marginTop="20dp"
         android:onClick="add"
         android:text="@string/button_add"
-        android:elevation="12dp"
+        android:textColor="@color/colorText"
+        android:background="@drawable/buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime" />
 
@@ -42,7 +75,9 @@
         android:layout_marginBottom="20dp"
         android:onClick="subtract"
         android:text="@string/button_subtract"
-        android:elevation="12dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorText"
+        android:background="@drawable/buttons"
         app:layout_constraintBottom_toTopOf="@+id/timePicker_amountToAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime" />
@@ -67,7 +102,8 @@
         android:layout_marginTop="20dp"
         android:onClick="calculate"
         android:text="@string/button_calculate"
-        android:elevation="12dp"
+        android:textColor="@color/colorText"
+        android:background="@drawable/buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,38 +118,14 @@
         android:gravity="center"
         android:textSize="20sp"
         android:elevation="12dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_calculate" />
 
-    <Button
-        android:id="@+id/button_armyTime"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="2dp"
-        android:onClick="armyTime"
-        android:text="@string/button_armyTime"
-        android:gravity="top|end"
-        android:elevation="-12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_amPm"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="OnClick" />
 
-    <Button
-        android:id="@+id/button_amPm"
-        android:layout_width="0dp"
-        android:layout_height="733dp"
-        android:onClick="amPm"
-        android:text="@string/button_amPm"
-        android:gravity="top|start"
-        android:elevation="-12dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_armyTime"
-        app:layout_constraintEnd_toStartOf="@+id/button_armyTime"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="OnClick" />
 
 
 </android.support.constraint.ConstraintLayout>
