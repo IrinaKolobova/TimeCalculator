@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TimeCalculator</string>
+    <string name="app_name">Time Calculator</string>
     <string name="button_add">+</string>
     <string name="button_subtract">-</string>
     <string name="button_calculate">Calculate</string>
