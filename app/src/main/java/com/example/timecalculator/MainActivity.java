@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 addMin = minute;
             }
         });
-
+        button_add.setBackground(getDrawable(R.drawable.button_unselected));
+        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
         add = false;
         subtract = false;
         ampmFormat = false;
@@ -70,12 +71,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void add(View v){
+        button_add.setBackground(getDrawable(R.drawable.button_selected));
+        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
         add = true;
         subtract = false;
         textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void subtract(View v){
+        button_subtract.setBackground(getDrawable(R.drawable.button_selected));
+        button_add.setBackground(getDrawable(R.drawable.button_unselected));
         subtract = true;
         add = false;
         textView_result.setText(getString(R.string.textView_clear));
@@ -86,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
         timePicker_startingTime.setIs24HourView(true);
         ampmFormat = false;
         textView_result.setText(getString(R.string.textView_clear));
+        button_add.setBackground(getDrawable(R.drawable.button_unselected));
+        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
+        add = false;
+        subtract = false;
     }
 
     public void amPm(View v){
@@ -93,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
         timePicker_startingTime.setIs24HourView(false);
         ampmFormat = true;
         textView_result.setText(getString(R.string.textView_clear));
+        button_add.setBackground(getDrawable(R.drawable.button_unselected));
+        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
+        add = false;
+        subtract = false;
     }
 
     public void calculate (View v){
@@ -148,24 +161,25 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Calculate result data: ", "Error");
             textView_result.setText(getString(R.string.textView_err, errorMessage));
         }
-
-        add = false;
-        subtract = false;
     }
 
     private void calculateAmPM(int diffOfHours) {
         int amPmHours = diffOfHours - 12;
         String amOrPM;
-
-        if(amPmHours >= 0){
+        if(amPmHours >= 0 ){
+            //&& amPmHours != 12
             resultOfHours = String.valueOf(amPmHours);
             amOrPM = "PM";
-            textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, amOrPM));
+        } else if (amPmHours == -12) {
+            amPmHours = 12;
+            resultOfHours = String.valueOf(amPmHours);
+            amOrPM = "AM";
         } else {
             resultOfHours = String.valueOf(diffOfHours);
             amOrPM = "AM";
-            textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, amOrPM));
         }
+
+        textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, amOrPM));
 
         Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes + " " + amOrPM);
 
