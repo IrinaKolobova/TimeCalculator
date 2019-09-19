@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TimePicker timePicker_startingTime, timePicker_amountToAdd;
     private String date, errorMessage, resultOfHours, resultOfMinutes;
     private int startingHour, startingMin, addHour, addMin, diffOfHours, diffOfMinutes;
-    private boolean add, subtract, ampmFormat;
+    private boolean add, subtract, ampmFormat, armyTimeFormat;
 
 
     @Override
@@ -36,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
         button_amPm = findViewById(R.id.button_amPm);
         button_armyTime = findViewById(R.id.button_armyTime);
         textView_result = findViewById(R.id.textView_result);
+        constraint_layout.setBackground(getDrawable(R.drawable.ampm_background));
 
         timePicker_startingTime = findViewById(R.id.timePicker_startingTime);
-        timePicker_startingTime.setIs24HourView(true);
+        timePicker_startingTime.setIs24HourView(false);
         startingHour = timePicker_startingTime.getHour();
         startingMin = timePicker_startingTime.getMinute();
         timePicker_startingTime.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
@@ -62,17 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 addMin = minute;
             }
         });
-        button_add.setBackground(getDrawable(R.drawable.button_unselected));
-        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
-        add = false;
-        subtract = false;
-        ampmFormat = false;
+        unselectAllButtons();
+        ampmFormat = true;
 
     }
 
     public void add(View v){
         button_add.setBackground(getDrawable(R.drawable.button_selected));
         button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
+        button_calculate.setBackground(getDrawable(R.drawable.button_unselected));
         add = true;
         subtract = false;
         textView_result.setText(getString(R.string.textView_clear));
@@ -81,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     public void subtract(View v){
         button_subtract.setBackground(getDrawable(R.drawable.button_selected));
         button_add.setBackground(getDrawable(R.drawable.button_unselected));
+        button_calculate.setBackground(getDrawable(R.drawable.button_unselected));
         subtract = true;
         add = false;
         textView_result.setText(getString(R.string.textView_clear));
@@ -90,25 +90,18 @@ public class MainActivity extends AppCompatActivity {
         constraint_layout.setBackground(getDrawable(R.drawable.armytime_background));
         timePicker_startingTime.setIs24HourView(true);
         ampmFormat = false;
-        textView_result.setText(getString(R.string.textView_clear));
-        button_add.setBackground(getDrawable(R.drawable.button_unselected));
-        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
-        add = false;
-        subtract = false;
+        unselectAllButtons();
     }
 
     public void amPm(View v){
         constraint_layout.setBackground(getDrawable(R.drawable.ampm_background));
         timePicker_startingTime.setIs24HourView(false);
         ampmFormat = true;
-        textView_result.setText(getString(R.string.textView_clear));
-        button_add.setBackground(getDrawable(R.drawable.button_unselected));
-        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
-        add = false;
-        subtract = false;
+        unselectAllButtons();
     }
 
     public void calculate (View v){
+        button_calculate.setBackground(getDrawable(R.drawable.button_selected));
         date = "Current day";
         errorMessage = "";
         Log.i("Calculate incoming data: " ,"startingHour = " + startingHour + ", startingMin = " + startingMin +
@@ -167,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         int amPmHours = diffOfHours - 12;
         String amOrPM;
         if(amPmHours >= 0 ){
-            //&& amPmHours != 12
             resultOfHours = String.valueOf(amPmHours);
             amOrPM = "PM";
         } else if (amPmHours == -12) {
@@ -183,6 +175,15 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes + " " + amOrPM);
 
+    }
+
+    private void unselectAllButtons(){
+        button_add.setBackground(getDrawable(R.drawable.button_unselected));
+        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
+        button_calculate.setBackground(getDrawable(R.drawable.button_unselected));
+        add = false;
+        subtract = false;
+        textView_result.setText(getString(R.string.textView_clear));
     }
 
 }

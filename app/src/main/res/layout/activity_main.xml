@@ -5,7 +5,8 @@
     android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/armytime_background"
+    android:gravity="center"
+    android:background="@drawable/ampm_background"
     tools:context=".MainActivity">
 
     <Button
@@ -14,12 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:backgroundTint="@color/transparent"
+        android:fontFamily="Quicksand"
         android:gravity="start|top"
         android:onClick="amPm"
         android:text="@string/button_amPm"
-        android:textStyle="bold"
         android:textColor="@color/colorText"
-        android:fontFamily="Quicksand"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_armyTime"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -30,78 +31,82 @@
         android:layout_height="match_parent"
         android:layout_gravity=""
         android:backgroundTint="@color/transparent"
+        android:fontFamily="Quicksand"
         android:gravity="top|end"
         android:onClick="armyTime"
         android:text="@string/button_armyTime"
-        android:textStyle="bold"
         android:textColor="@color/colorText"
-        android:fontFamily="Quicksand"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="OnClick" />
 
     <TimePicker
         android:id="@+id/timePicker_startingTime"
         android:layout_width="240dp"
         android:layout_height="180dp"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="24dp"
         android:elevation="12dp"
         android:timePickerMode="spinner"
-        app:layout_constraintBottom_toTopOf="@+id/button_add"
+        app:layout_constraintBottom_toTopOf="@id/button_add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.363" />
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <Button
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="88dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="88dp"
         android:background="@drawable/button_unselected"
         android:fontFamily="Quicksand"
         android:onClick="add"
         android:text="@string/button_add"
         android:textColor="@color/colorText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime" />
+        app:layout_constraintBottom_toTopOf="@id/timePicker_amountToAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <Button
         android:id="@+id/button_subtract"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="88dp"
+        android:background="@drawable/button_unselected"
+        android:fontFamily="Quicksand"
         android:onClick="subtract"
         android:text="@string/button_subtract"
-        android:textStyle="bold"
         android:textColor="@color/colorText"
-        android:background="@drawable/button_unselected"
-        app:layout_constraintBottom_toTopOf="@+id/timePicker_amountToAdd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timePicker_startingTime" />
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_add"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TimePicker
         android:id="@+id/timePicker_amountToAdd"
         android:layout_width="240dp"
         android:layout_height="180dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginTop="12dp"
         android:elevation="12dp"
         android:timePickerMode="spinner"
-        app:layout_constraintEnd_toEndOf="@+id/timePicker_startingTime"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/timePicker_startingTime"
-        app:layout_constraintTop_toBottomOf="@+id/button_add" />
-
+        app:layout_constraintBottom_toTopOf="@id/button_calculate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <Button
         android:id="@+id/button_calculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_unselected"
         android:fontFamily="Quicksand"
@@ -110,15 +115,18 @@
         android:paddingEnd="15dp"
         android:text="@string/button_calculate"
         android:textColor="@color/colorText"
+        app:layout_constraintBottom_toTopOf="@id/textView_result"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timePicker_amountToAdd" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker_amountToAdd"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <TextView
         android:id="@+id/textView_result"
         android:layout_width="189dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="32dp"
         android:elevation="12dp"
         android:fontFamily="Quicksand"
@@ -130,9 +138,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_calculate"
-        app:layout_constraintVertical_bias="0.0" />
-
-
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
 
 </android.support.constraint.ConstraintLayout>
