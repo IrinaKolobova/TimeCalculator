@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculate (View v){
         button_calculate.setBackground(getDrawable(R.drawable.button_selected));
-        date = "Current day";
+        date = getResources().getString(R.string.date_current);
         errorMessage = "";
         Log.i("Calculate incoming data: " ,"startingHour = " + startingHour + ", startingMin = " + startingMin +
                 "\n" + "addHour = " + addHour + ", addMin = " + addMin );
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     diffOfHours += 1;
                 }
                 if(diffOfHours >= 24){
-                    date = "Next day";
+                    date = getResources().getString(R.string.date_next);;
                     diffOfHours = diffOfHours - 24;
                 }
             } else {
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (diffOfHours < 0) {
                     diffOfHours = 24 + diffOfHours;
-                    date = "Previous day";
+                    date = getResources().getString(R.string.date_prev);
                 }
             }
             resultOfHours = String.valueOf(diffOfHours);

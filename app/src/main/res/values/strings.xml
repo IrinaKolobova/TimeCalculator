@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">Time Calculator</string>
-    <string name="button_add">+</string>
-    <string name="button_subtract">-</string>
+    <string name="button_add" translatable="false">+</string>
+    <string name="button_subtract" translatable="false">-</string>
     <string name="button_calculate">Calculate</string>
-    <string name="textView_result">%1$s\n%2$s:%3$s %4$s</string>
-    <string name="textView_err">%1$s</string>
-    <string name="textView_clear"> </string>
+    <string name="textView_result" translatable="false">%1$s\n%2$s:%3$s %4$s</string>
+    <string name="textView_err" translatable="false">%1$s</string>
+    <string name="textView_clear" translatable="false"> </string>
     <string name="button_armyTime">24-hour clock</string>
     <string name="button_amPm">12-hour clock</string>
+    <string name="date_current">Current day</string>
+    <string name="date_prev">Previous day</string>
+    <string name="date_next">Next day</string>
+    <string name="error_message">Please, choose subtract or add.</string>
 </resources>
