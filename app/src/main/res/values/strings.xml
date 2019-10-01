@@ -12,4 +12,7 @@
     <string name="date_prev">Previous day</string>
     <string name="date_next">Next day</string>
     <string name="error_message">Please, choose subtract or add.</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+
 </resources>

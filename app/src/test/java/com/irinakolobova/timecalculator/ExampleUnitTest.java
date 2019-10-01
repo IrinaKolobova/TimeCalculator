@@ -1,4 +1,4 @@
-package com.example.timecalculator;
+package com.irinakolobova.timecalculator;
 
 import org.junit.Test;
 

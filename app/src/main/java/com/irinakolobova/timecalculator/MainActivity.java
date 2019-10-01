@@ -1,8 +1,5 @@
-package com.example.timecalculator;
+package com.irinakolobova.timecalculator;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 startingHour = hourOfDay;
                 startingMin = minute;
+                unselectAllButtons();
             }
         });
 
@@ -54,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         timePicker_amountToAdd.setIs24HourView(true);
         timePicker_amountToAdd.setHour(0);
         timePicker_amountToAdd.setMinute(0);
-        startingHour = timePicker_startingTime.getHour();
-        startingMin = timePicker_startingTime.getMinute();
         timePicker_amountToAdd.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 addHour = hourOfDay;
                 addMin = minute;
+                button_calculate.setBackground(getDrawable(R.drawable.button_unselected));
+                textView_result.setText(getString(R.string.textView_clear));
             }
         });
         unselectAllButtons();
@@ -69,21 +66,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void add(View v){
-        button_add.setBackground(getDrawable(R.drawable.button_selected));
-        button_subtract.setBackground(getDrawable(R.drawable.button_unselected));
-        button_calculate.setBackground(getDrawable(R.drawable.button_unselected));
+        selectButton(button_add);
         add = true;
-        subtract = false;
-        textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void subtract(View v){
-        button_subtract.setBackground(getDrawable(R.drawable.button_selected));
-        button_add.setBackground(getDrawable(R.drawable.button_unselected));
-        button_calculate.setBackground(getDrawable(R.drawable.button_unselected));
+        selectButton(button_subtract);
         subtract = true;
-        add = false;
-        textView_result.setText(getString(R.string.textView_clear));
     }
 
     public void armyTime(View v){
@@ -104,28 +93,39 @@ public class MainActivity extends AppCompatActivity {
         button_calculate.setBackground(getDrawable(R.drawable.button_selected));
         date = getResources().getString(R.string.date_current);
         errorMessage = "";
+
         Log.i("Calculate incoming data: " ,"startingHour = " + startingHour + ", startingMin = " + startingMin +
                 "\n" + "addHour = " + addHour + ", addMin = " + addMin );
 
+        //if add or subtract was chosen we can calculate
+        //otherwise show error
         if(add || subtract){
+
+            //addition
             if(add){
                 diffOfHours = startingHour + addHour;
                 diffOfMinutes = startingMin + addMin;
+                //convert minutes to hours if more than 60 minutes
                 if(diffOfMinutes >= 60){
                     diffOfMinutes = diffOfMinutes - 60;
                     diffOfHours += 1;
                 }
+                //change date to the next one if more than 24 hours
                 if(diffOfHours >= 24){
-                    date = getResources().getString(R.string.date_next);;
+                    date = getResources().getString(R.string.date_next);
                     diffOfHours = diffOfHours - 24;
                 }
+
+            //subtraction
             } else {
                 diffOfHours = startingHour - addHour;
                 diffOfMinutes = startingMin - addMin;
+                //if difference of minutes is negative subtract one hour and convert it to minutes
                 if (diffOfMinutes < 0) {
                     diffOfHours -= 1;
                     diffOfMinutes = 60 + diffOfMinutes;
                 }
+                //if difference of hours is negative change date to the previous one
                 if (diffOfHours < 0) {
                     diffOfHours = 24 + diffOfHours;
                     date = getResources().getString(R.string.date_prev);
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             }
             resultOfHours = String.valueOf(diffOfHours);
             resultOfMinutes = String.valueOf(diffOfMinutes);
-
+            //formatting output text
             if(diffOfHours < 10){
                 resultOfHours = "0" + resultOfHours;
             }
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.i("Calculate result data: ", "resultOfHours = " + resultOfHours + ", resultOfMinutes = " + resultOfMinutes);
 
+            //converting to 12-hour format
             if(ampmFormat){
                 calculateAmPM(diffOfHours);
             } else {
@@ -157,18 +158,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculateAmPM(int diffOfHours) {
-        int amPmHours = diffOfHours - 12;
         String amOrPM;
-        if(amPmHours >= 0 ){
+        String am = getResources().getString(R.string.am);
+        String pm = getResources().getString(R.string.pm);
+
+        int amPmHours = diffOfHours - 12;
+
+        //it's PM if value amPmHours is positive
+        if(amPmHours > 0) {
             resultOfHours = String.valueOf(amPmHours);
-            amOrPM = "PM";
+            amOrPM = pm;
+        //adjust 00pm to 12pm
+        } else if (amPmHours == 0) {
+            amPmHours = 12;
+            resultOfHours = String.valueOf(amPmHours);
+            amOrPM = pm;
+        //it's AM if value amPmHours is negative
+        //adjust 00am to 12am
         } else if (amPmHours == -12) {
             amPmHours = 12;
             resultOfHours = String.valueOf(amPmHours);
-            amOrPM = "AM";
+            amOrPM = am;
         } else {
             resultOfHours = String.valueOf(diffOfHours);
-            amOrPM = "AM";
+            amOrPM = am;
         }
 
         textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, amOrPM));
@@ -184,6 +197,11 @@ public class MainActivity extends AppCompatActivity {
         add = false;
         subtract = false;
         textView_result.setText(getString(R.string.textView_clear));
+    }
+
+    private void selectButton(Button buttonToSelect){
+        unselectAllButtons();
+        buttonToSelect.setBackground(getDrawable(R.drawable.button_selected));
     }
 
 }
