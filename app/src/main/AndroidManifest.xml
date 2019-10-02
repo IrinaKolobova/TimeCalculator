@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.irinakolobova.timecalculator.MainActivity"
+        <activity android:name="com.irinakolobova.timecalculator.CalculatorActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
             <meta-data

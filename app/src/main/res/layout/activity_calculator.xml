@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/ampm_background"
-    tools:context=".MainActivity">
+    tools:context=".CalculatorActivity">
 
     <Button
         android:id="@+id/button_amPm"

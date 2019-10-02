@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class MainActivity extends AppCompatActivity {
+public class CalculatorActivity extends AppCompatActivity {
 
     private ConstraintLayout constraint_layout;
     private Button button_add, button_subtract, button_calculate, button_amPm, button_armyTime;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_calculator);
 
         constraint_layout = findViewById(R.id.constraint_layout);
         button_add = findViewById(R.id.button_add);
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             //converting to 12-hour format
             if(ampmFormat){
                 calculateAmPM(diffOfHours);
+            //keeping 24-hour format
             } else {
                 textView_result.setText(getString(R.string.textView_result, date, resultOfHours, resultOfMinutes, ""));
             }
